@@ -92,14 +92,14 @@
       "command": "node scripts/start-api.js",
       "env": {
         "NODE_ENV": "development",
-        "APIPORT": 3030
+        "PORT": 3030
       }
     },
     "start-api-prod": {
       "command": "node scripts/start-api.js",
       "env": {
         "NODE_ENV": "production",
-        "APIPORT": 3000
+        "PORT": 3000
       }
     }
   },
