@@ -64,9 +64,7 @@
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3",
     "winston": "^2.4.0",
-    "winston-papertrail": "^1.0.5"
-  },
-  "devDependencies": {
+    "winston-papertrail": "^1.0.5",
     "babel-plugin-react-transform": "^2.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -79,6 +77,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
     "piping": "^1.0.0-rc.4"
+  },
+  "devDependencies": {
   },
   "betterScripts": {
     "start-web-dev": {
