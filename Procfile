@@ -1,1 +1,1 @@
-web: npm run prod
+web: node scripts/start-api.js
