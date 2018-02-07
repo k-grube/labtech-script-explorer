@@ -5,31 +5,6 @@ import './LabTechScriptStepView.css';
 
 import LabTechScriptStep from './LabTechScriptStep';
 
-const getFunctionString = ScriptStep => {
-  const {
-    Function: {
-      Name,
-      FunctionType,
-      ParamNames,
-    },
-  } = ScriptStep;
-
-  let base = `${FunctionType === 'If' ? FunctionType : ''} ${Name} - `;
-
-  ParamNames.forEach(param => {
-    const {
-      ParamName, Values, Value,
-    } = param;
-    let value = Value;
-    if (Values && Values.length > 0 && Number.isInteger(value)) {
-      value = Values[Value];
-    }
-
-    base += `${ParamName} ${value} `;
-  });
-  return base;
-};
-
 export default class LabTechScriptStepView extends Component {
   state = {activeIndex: 0};
 
@@ -44,11 +19,11 @@ export default class LabTechScriptStepView extends Component {
   render() {
     const {
       LabTechScript: {
-        LabTech_Expansion: {
-          PackedScript: {
-            NewDataSet: {
-              Table: {
-                ScriptData,
+        PackedScript: {
+          NewDataSet: {
+            Table: {
+              ScriptData: {
+                ScriptSteps,
               },
             },
           },
@@ -61,15 +36,14 @@ export default class LabTechScriptStepView extends Component {
     return (
       <Container className="StepContainer">
         <Accordion as={Menu} vertical fluid>
-          {ScriptData.map((ScriptStep, idx) => {
+          {ScriptSteps.map((ScriptStep, idx) => {
             const {Indentation} = ScriptStep;
-            const intIndentation = parseInt(Indentation, 10);
             return (
 
-              <div style={{marginLeft: intIndentation * 20}}>
+              <div style={{marginLeft: Indentation * 20}}>
                 <Accordion.Title
                   active={activeIndex === idx}
-                  content={getFunctionString(ScriptStep)}
+                  content={ScriptStep.StepDescription}
                   index={idx}
                   onClick={this.handleClick}
                 />

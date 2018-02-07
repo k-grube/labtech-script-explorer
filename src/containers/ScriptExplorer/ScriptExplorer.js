@@ -25,7 +25,7 @@ class ScriptExplorer extends Component {
         <Container>
           {scriptDecodeError &&
           <Message color="red">
-            {`Parsing error: ${scriptDecodeError.msg}`}
+            {`Parsing error: ${scriptDecodeError.msg || scriptDecodeError.message}`}
           </Message>
           }
           <ScriptForm onSubmit={this.handleSubmit}/>

@@ -26,18 +26,18 @@ export default function LabTechScriptStep(props) {
       Continue,
       OsLimit,
       Indentation,
-      Function: {
+      FunctionObject: {
         Name,
         FunctionType,
         ParamNames,
+        Description,
       },
-      Description,
     },
   } = props;
 
   return (
     <Container style={{paddingLeft: 24}}>
-      {getFunctionDescriptions(props.LabTechScriptStep).map((desc, idx) => <div key={idx}>{desc}<br/></div>)}
+      {Description}
     </Container>
   );
 }

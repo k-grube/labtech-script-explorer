@@ -6,20 +6,18 @@ import types from '../../types';
 export default function LabTechScriptInfo(props) {
   const {
     LabTechScript: {
-      LabTech_Expansion: {
-        $: {
-          Version,
-        },
-        PackedScript: {
-          NewDataSet: {
-            Table: {
-              ScriptName,
-              ScriptNotes,
-              ComputerScript,
-              LocationScript,
-              MaintenanceScript,
-              FunctionScript,
-            },
+      $: {
+        Version,
+      },
+      PackedScript: {
+        NewDataSet: {
+          Table: {
+            ScriptName,
+            ScriptNotes,
+            ComputerScript,
+            LocationScript,
+            MaintenanceScript,
+            FunctionScript,
           },
         },
       },
