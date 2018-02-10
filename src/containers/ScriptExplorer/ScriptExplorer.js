@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import ScriptForm from '../../components/ScriptForm';
+import EditorView from './EditorView';
 import LabTechScriptView from '../../components/LabTechScriptView/LabTechScriptView';
 import {decodeScript} from '../../redux/script';
 import types from '../../types';
@@ -12,12 +13,9 @@ import types from '../../types';
   LabTechScript: state.script.LabTechScript,
   scriptDecodeError: state.script.scriptDecodeError,
   scriptDecoded: state.script.scriptDecoded,
+  /* eslint-disable indent */
 }), {decodeScript})
 class ScriptExplorer extends Component {
-  handleSubmit = data => {
-    this.props.decodeScript(data);
-  };
-
   render() {
     const {LabTechScript, scriptDecodeError, scriptDecoded} = this.props;
     return (
@@ -28,20 +26,14 @@ class ScriptExplorer extends Component {
             {`Parsing error: ${scriptDecodeError.msg || scriptDecodeError.message}`}
           </Message>
           }
-          <ScriptForm onSubmit={this.handleSubmit}/>
         </Container>
-        <Container>
-          {!scriptDecodeError && scriptDecoded &&
-          <LabTechScriptView LabTechScript={LabTechScript}/>
-          }
-        </Container>
+        <EditorView/>
       </div>
     );
   }
 }
 
 ScriptExplorer.propTypes = {
-  decodeScript: PropTypes.func.isRequired,
   scriptDecoded: PropTypes.bool,
   scriptDecodeError: types.APIError,
   LabTechScript: PropTypes.shape({}),

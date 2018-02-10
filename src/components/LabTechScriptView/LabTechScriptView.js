@@ -7,20 +7,19 @@ import LabTechScriptStepView from './LabTechScriptStepView';
 
 class LabTechScriptView extends Component {
   render() {
-    const {LabTechScript} = this.props;
+    const {PackedScript} = this.props;
 
     return (
       <Container>
-        <LabTechScriptInfo LabTechScript={LabTechScript}/>
-        <Divider/>
-        <LabTechScriptStepView LabTechScript={LabTechScript}/>
+        <LabTechScriptInfo PackedScript={PackedScript}/>
+        <LabTechScriptStepView PackedScript={PackedScript}/>
       </Container>
     );
   }
 }
 
 LabTechScriptView.propTypes = {
-  LabTechScript: types.LabTechScript.isRequired,
+  PackedScript: types.PackedScript.isRequired,
 };
 
 export default LabTechScriptView;

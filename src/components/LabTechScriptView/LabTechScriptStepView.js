@@ -1,65 +1,64 @@
 import React, {Component} from 'react';
-import {Container, Accordion, Menu} from 'semantic-ui-react';
+import {Container, Grid, GridColumn, GridRow} from 'semantic-ui-react';
 import types from '../../types';
-import './LabTechScriptStepView.css';
+import LabTechScriptSection from './LabTechScriptSection';
+import './LabTechScriptView.css';
 
-import LabTechScriptStep from './LabTechScriptStep';
-
-export default class LabTechScriptStepView extends Component {
-  state = {activeIndex: 0};
-
-  handleClick = (e, titleProps) => {
-    const {index} = titleProps;
-    const {activeIndex} = this.state;
-    const newIndex = activeIndex === index ? -1 : index;
-
-    this.setState({activeIndex: newIndex});
-  };
-
+class LabTechScriptStepView extends Component {
   render() {
     const {
-      LabTechScript: {
-        PackedScript: {
-          NewDataSet: {
-            Table: {
-              ScriptData: {
-                ScriptSteps,
-              },
+      PackedScript: {
+        NewDataSet: {
+          Table: {
+            ScriptData: {
+              ScriptSteps,
             },
           },
         },
       },
     } = this.props;
 
-    const {activeIndex} = this.state;
+    const InitialCheck = [];
+    const ThenSection = [];
+    const ElseSection = [];
+
+    ScriptSteps.forEach(step => {
+      /* eslint-disable default-case */
+      switch (step.ActionObject) {
+        case 'InitialCheck':
+          InitialCheck.push(step);
+          break;
+        case 'ThenSection':
+          ThenSection.push(step);
+          break;
+        case 'ElseSection':
+          ElseSection.push(step);
+          break;
+      }
+    });
 
     return (
-      <Container className="StepContainer">
-        <Accordion as={Menu} vertical fluid>
-          {ScriptSteps.map((ScriptStep, idx) => {
-            const {Indentation} = ScriptStep;
-            return (
-
-              <div style={{marginLeft: Indentation * 20}}>
-                <Accordion.Title
-                  active={activeIndex === idx}
-                  content={ScriptStep.StepDescription}
-                  index={idx}
-                  onClick={this.handleClick}
-                />
-                <Accordion.Content
-                  active={activeIndex === idx}
-                  content={<LabTechScriptStep LabTechScriptStep={ScriptStep}/>}
-                />
-              </div>
-            );
-          })}
-        </Accordion>
+      <Container className="ScriptContainer">
+        <LabTechScriptSection
+          sectionName="Initial Check"
+          steps={InitialCheck}
+          style={{paddingBottom: '5px'}}
+        />
+        <LabTechScriptSection
+          sectionName="Then Section"
+          steps={ThenSection}
+          style={{paddingTop: '5px', paddingBottom: '5px'}}/>
+        <LabTechScriptSection
+          sectionName="Else Section"
+          steps={ElseSection}
+          style={{paddingTop: '5px', paddingBottom: '5px'}}/>
       </Container>
     );
   }
 }
 
 LabTechScriptStepView.propTypes = {
-  LabTechScript: types.LabTechScript.isRequired,
+  PackedScript: types.PackedScript.isRequired,
 };
+
+export default LabTechScriptStepView;

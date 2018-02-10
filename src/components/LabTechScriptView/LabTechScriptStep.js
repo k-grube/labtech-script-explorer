@@ -1,30 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Container} from 'semantic-ui-react';
+import {Container, Segment, GridRow, GridColumn} from 'semantic-ui-react';
 
 import types from '../../types';
-
-/**
- *
- * @param {ScriptStep} ScriptStep
- */
-const getFunctionDescriptions = ({Function: {ParamNames}}) => {
-  /* eslint-disable object-curly-newline */
-  return ParamNames.map(({ParamName, Values, Description, Value}) => {
-    let value = Value;
-    if (Values && Values.length > 0 && Number.isInteger(value)) {
-      value = Values[Value];
-    }
-    return `${ParamName} ${value} - ${Description} `;
-  });
-};
 
 export default function LabTechScriptStep(props) {
   const {
     LabTechScriptStep: {
       Action,
       Continue,
-      OsLimit,
+      FunctionId,
+      StepDescription,
+      OsLimitObject,
+      ContinueObject,
+      Sort,
       Indentation,
       FunctionObject: {
         Name,
@@ -36,9 +25,20 @@ export default function LabTechScriptStep(props) {
   } = props;
 
   return (
-    <Container style={{paddingLeft: 24}}>
-      {Description}
-    </Container>
+    <GridRow>
+      <GridColumn width={1}>
+        {`${Sort + 1}`}
+      </GridColumn>
+      <GridColumn width={9} style={{paddingLeft: Indentation * 10}}>
+        {StepDescription}
+      </GridColumn>
+      <GridColumn width={3}>
+        {ContinueObject}
+      </GridColumn>
+      <GridColumn width={3}>
+        {OsLimitObject}
+      </GridColumn>
+    </GridRow>
   );
 }
 
