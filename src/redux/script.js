@@ -1,6 +1,12 @@
+const decode = require('labtech-script-decode');
+
 const initialState = {
   scriptDecoded: false,
   scriptDecodeError: undefined,
+  activeIndex: 0,
+  LabTechScript: undefined,
+  scriptXML: '',
+  scriptJSON: '',
 };
 
 const LOAD_SCRIPTS = 'script/LOAD_SCRIPTS';
@@ -11,7 +17,12 @@ const DECODE_SCRIPT = 'script/DECODE_SCRIPT';
 const DECODE_SCRIPT_SUCCESS = 'script/DECODE_SCRIPT_SUCCESS';
 const DECODE_SCRIPT_FAIL = 'script/DECODE_SCRIPT_FAIL';
 
+const CHANGE_TAB = 'script/CHANGE_TAB';
+const XML_SET = 'script/XML_SET';
+const JSON_SET = 'script/JSON_SET';
+
 export default function reducer(state = initialState, action = {}) {
+  // console.log('SCRIPT REDUCER', action);
   switch (action.type) {
     case DECODE_SCRIPT_FAIL:
       return {
@@ -26,32 +37,72 @@ export default function reducer(state = initialState, action = {}) {
         scriptDecoded: true,
         scriptDecodeError: undefined,
         LabTechScript: action.result,
+        scriptJSON: JSON.stringify(action.result, null, 2),
+      };
+    case CHANGE_TAB:
+      return {
+        ...state,
+        activeIndex: action.result,
+      };
+    case XML_SET:
+      return {
+        ...state,
+        scriptXML: action.result,
+      };
+    case JSON_SET:
+      return {
+        ...state,
+        scriptJSON: action.result,
       };
     default:
       return state;
   }
 }
 
-export function loadScripts({page = 0, pageSize = 25, search = ''}) {
-  return {
-    types: [LOAD_SCRIPTS, LOAD_SCRIPTS_SUCCESS, LOAD_SCRIPTS_FAIL],
-    promise: client => client.get('/api/scripts', {
-      params: {
-        page,
-        pageSize,
-        search,
-      },
-    }),
-  };
-}
-
 export function decodeScript({scriptXML}) {
   return {
     types: [DECODE_SCRIPT, DECODE_SCRIPT_SUCCESS, DECODE_SCRIPT_FAIL],
-    promise: client => client.post('/api/script/decode', {
-      data: {
-        scriptXML,
-      },
-    }),
+    promise: () => decode.decodeXML(scriptXML),
+  };
+}
+
+export function encodeScript({LabTechScript}) {
+  return dispatch => {
+    decode.encode(LabTechScript)
+      .then(scriptXML => {
+        dispatch(setXML({scriptXML}));
+      });
+  };
+}
+
+export function changeTab({activeIndex}) {
+  return {
+    type: CHANGE_TAB,
+    result: activeIndex,
+  };
+}
+
+export function setXML({scriptXML}) {
+  return dispatch => {
+    dispatch({
+      type: XML_SET,
+      result: scriptXML,
+    });
+    dispatch(decodeScript({scriptXML}));
+  };
+}
+
+export function setJSON({scriptJSON}) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: JSON_SET,
+      result: scriptJSON,
+    });
+    decode.encodeXML(scriptJSON)
+      .then(scriptXML => {
+        dispatch(decodeScript({scriptXML}));
+      });
+    const {LabTechScript} = getState().script;
+    dispatch(encodeScript({LabTechScript}));
   };
 }
