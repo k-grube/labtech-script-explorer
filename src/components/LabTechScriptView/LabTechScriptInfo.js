@@ -31,7 +31,16 @@ export default function LabTechScriptInfo(props) {
   let folderString = '';
 
   if (ScriptFolder && ScriptFolder.length > 0) {
-    ScriptFolder.forEach(folder => ScriptFolders.push(folder.NewDataSet.Table));
+    ScriptFolder.forEach(folder => {
+      if (folder && folder.NewDataSet) {
+        ScriptFolders.push(folder.NewDataSet.Table);
+      } else {
+        ScriptFolders.push({
+          ParentID: 0,
+          Name: 'No Script Folder Specified',
+        });
+      }
+    });
   }
 
   if (ScriptFolders.length === 2) {

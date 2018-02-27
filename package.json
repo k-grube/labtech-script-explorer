@@ -12,6 +12,11 @@
   "engines": {
     "node": "6.11.4"
   },
+  "repository": {
+    "url": "https://github.com/k-grube/labtech-script-explorer.git",
+    "type": "git"
+  },
+  "homepage": "https://k-grube.github.io/labtech-script-explorer",
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "7.1.2",
@@ -66,6 +71,7 @@
     "pretty-error": "^2.1.1",
     "promise": "8.0.1",
     "prop-types": "^15.6.0",
+    "pushstate-server": "^3.0.1",
     "react": "^15.6.1",
     "react-dev-utils": "^4.2.1",
     "react-dom": "^15.6.1",
@@ -94,7 +100,9 @@
     "winston": "^2.4.0",
     "winston-papertrail": "^1.0.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
+  },
   "betterScripts": {
     "start-web-dev": {
       "command": "node scripts/start.js",
@@ -125,7 +133,9 @@
     "postinstall": "npm run build",
     "prod": "better-npm-run start-api-prod",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "jest": {
     "collectCoverageFrom": [
