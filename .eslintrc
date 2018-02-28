@@ -50,7 +50,7 @@
     "function-paren-newline": "off",
     "arrow-parens": [
       "error",
-      "as-needed"
+      "always"
     ],
     "no-shadow": [
       "error",
