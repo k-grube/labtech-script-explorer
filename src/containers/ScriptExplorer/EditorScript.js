@@ -42,7 +42,11 @@ class EditorScript extends Component {
 }
 
 EditorScript.propTypes = {
-  LabTechScript: types.LabTechScript.isRequired,
+  LabTechScript: types.LabTechScript,
+};
+
+EditorScript.defaultProps = {
+  LabTechScript: undefined,
 };
 
 export default EditorScript;

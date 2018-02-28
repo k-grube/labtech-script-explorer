@@ -28,8 +28,17 @@ class EditorXML extends Component {
 }
 
 EditorXML.propTypes = {
-  setXML: PropTypes.func.isRequired,
-  scriptXML: PropTypes.string.isRequired,
+  setXML: PropTypes.func,
+  scriptXML: PropTypes.string,
+  fileReadError: PropTypes.func,
+  fileDropRejected: PropTypes.func,
+};
+
+EditorXML.defaultProps = {
+  scriptXML: '',
+  setXML: () => {},
+  fileReadError: () => {},
+  fileDropRejected: () => {},
 };
 
 export default EditorXML;

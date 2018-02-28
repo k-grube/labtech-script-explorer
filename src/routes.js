@@ -8,9 +8,7 @@ import ScriptExplorer from './containers/ScriptExplorer/ScriptExplorer';
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path="/" component={HomePage}/>
-      <Route path="/test" component={() => <div>test</div>}/>
-      <Route path="/explorer" component={ScriptExplorer}/>
+      <Route path="/" component={ScriptExplorer}/>
       <Route path="" component={NotFound}/>
     </Switch>
   );

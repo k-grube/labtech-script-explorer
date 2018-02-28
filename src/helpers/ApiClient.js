@@ -5,7 +5,7 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 export default class ApiClient {
   constructor(req) {
     /* eslint-disable no-return-assign */
-    methods.forEach(method =>
+    methods.forEach((method) =>
       this[method] = (path, {params, data} = {}) => new Promise((resolve, reject) => {
         console.log('ApiClient path:', path);
 

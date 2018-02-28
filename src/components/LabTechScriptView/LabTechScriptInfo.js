@@ -31,7 +31,7 @@ export default function LabTechScriptInfo(props) {
   let folderString = '';
 
   if (ScriptFolder && ScriptFolder.length > 0) {
-    ScriptFolder.forEach(folder => {
+    ScriptFolder.forEach((folder) => {
       if (folder && folder.NewDataSet) {
         ScriptFolders.push(folder.NewDataSet.Table);
       } else {

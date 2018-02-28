@@ -22,7 +22,7 @@ class LabTechScriptStepView extends Component {
     const ThenSection = [];
     const ElseSection = [];
 
-    ScriptSteps.forEach(step => {
+    ScriptSteps.forEach((step) => {
       /* eslint-disable default-case */
       switch (step.ActionObject) {
         case 'InitialCheck':

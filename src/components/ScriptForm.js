@@ -6,7 +6,7 @@ import {Form, Button} from 'semantic-ui-react';
 
 import './ScriptForm.css';
 
-const required = value => (value ? undefined : 'Required');
+const required = (value) => (value ? undefined : 'Required');
 
 class ScriptForm extends Component {
   render() {

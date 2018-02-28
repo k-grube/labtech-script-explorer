@@ -37,8 +37,15 @@ class EditorView extends Component {
 }
 
 EditorView.propTypes = {
-  changeTab: PropTypes.func.isRequired,
-  activeIndex: PropTypes.number.isRequired,
+  changeTab: PropTypes.func,
+  activeIndex: PropTypes.number,
+  LabTechScript: propTypes.LabTechScript,
+};
+
+EditorView.defaultProps = {
+  activeIndex: 0,
+  LabTechScript: undefined,
+  changeTab: () => {},
 };
 
 export default EditorView;
