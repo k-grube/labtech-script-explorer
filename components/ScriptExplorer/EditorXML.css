@@ -1,0 +1,11 @@
+.dropzone {
+    width: 100%
+}
+
+.dropzone-rejected {
+    border: 1px #cc0000;
+}
+
+.dropzone-active {
+    border: 1px #1ebc30;
+}
