@@ -28,6 +28,7 @@
     "react/self-closing-comp": "off",
     "react/jsx-no-target-blank": "warn",
     "react/no-find-dom-node": "warn",
+    "react/no-unused-prop-types": "warn",
     "jsx-a11y/anchor-is-valid": "off",
     "react/no-array-index-key": "off",
     "import/default": "off",
@@ -49,52 +50,41 @@
     "react/jsx-tag-spacing": "off",
     "function-paren-newline": "off",
     "arrow-parens": [
-      "error",
-      "always"
+      "error", "always"
     ],
     "no-shadow": [
-      "error",
-      {
+      "error", {
         "allow": [
-          "then",
-          "catch",
-          "done"
+          "then", "catch", "done"
         ]
       }
     ],
     "max-len": [
-      "error",
-      120
+      "error", 120
     ],
     // use ide formatting
     "indent": [
-      2,
-      2,
-      {
+      2, 2, {
         "SwitchCase": 1
       }
     ],
     "quotes": [
-      2,
-      "single"
+      2, "single"
     ],
     "new-cap": 0,
     "no-prototype-builtins": 0,
     "no-restricted-syntax": [
-      "error",
-      "WithStatement"
+      "error", "WithStatement"
     ],
     "no-use-before-define": [
-      "error",
-      {
+      "error", {
         "functions": false,
         "classes": true
       }
     ]
   },
   "plugins": [
-    "react",
-    "import"
+    "react", "import"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -103,8 +93,7 @@
   "settings": {
     "import/resolve": {
       "moduleDirectory": [
-        "node_modules",
-        "src"
+        "node_modules", "src"
       ]
     }
   },

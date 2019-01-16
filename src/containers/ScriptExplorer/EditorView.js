@@ -10,6 +10,7 @@ import EditorXML from './EditorXML';
 import EditorJSON from './EditorJSON';
 import EditorScript from './EditorScript';
 import {changeTab} from '../../redux/script';
+import propTypes from '../../types';
 
 @connect(state => ({activeIndex: state.script.activeIndex, scriptXML: state.script.scriptXML}), {changeTab})
 class EditorView extends Component {

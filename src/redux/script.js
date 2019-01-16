@@ -67,9 +67,9 @@ export function decodeScript({scriptXML}) {
 }
 
 export function encodeScript({LabTechScript}) {
-  return dispatch => {
+  return (dispatch) => {
     decode.encode(LabTechScript)
-      .then(scriptXML => {
+      .then((scriptXML) => {
         dispatch(setXML({scriptXML}));
       });
   };
@@ -83,7 +83,7 @@ export function changeTab({activeIndex}) {
 }
 
 export function setXML({scriptXML}) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: XML_SET,
       result: scriptXML,
@@ -99,7 +99,7 @@ export function setJSON({scriptJSON}) {
       result: scriptJSON,
     });
     decode.encodeXML(scriptJSON)
-      .then(scriptXML => {
+      .then((scriptXML) => {
         dispatch(decodeScript({scriptXML}));
       });
     const {LabTechScript} = getState().script;
