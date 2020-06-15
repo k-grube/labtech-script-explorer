@@ -11,6 +11,7 @@ import EditorJSON from './EditorJSON';
 import EditorScript from './EditorScript';
 import {changeTab} from '../../redux/script';
 import propTypes from '../../types';
+import EditorText from './EditorText';
 
 @connect(state => ({activeIndex: state.script.activeIndex, scriptXML: state.script.scriptXML}), {changeTab})
 class EditorView extends Component {
@@ -25,6 +26,8 @@ class EditorView extends Component {
       menuItem: 'Script JSON', render: () => <Tab.Pane><EditorJSON/></Tab.Pane>,
     }, {
       menuItem: 'Script View', render: () => <Tab.Pane><EditorScript/></Tab.Pane>,
+    }, {
+      menuItem: 'Text View', render: () => <Tab.Pane><EditorText/></Tab.Pane>,
     }];
 
     return (

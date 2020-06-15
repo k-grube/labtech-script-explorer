@@ -1,3 +1,5 @@
+import {script} from 'labtech-script-decode';
+
 const decode = require('labtech-script-decode');
 
 const initialState = {
@@ -7,6 +9,7 @@ const initialState = {
   LabTechScript: undefined,
   scriptXML: '',
   scriptJSON: '',
+  scriptText: '',
 };
 
 const LOAD_SCRIPTS = 'script/LOAD_SCRIPTS';
@@ -20,6 +23,7 @@ const DECODE_SCRIPT_FAIL = 'script/DECODE_SCRIPT_FAIL';
 const CHANGE_TAB = 'script/CHANGE_TAB';
 const XML_SET = 'script/XML_SET';
 const JSON_SET = 'script/JSON_SET';
+const TEXT_SET = 'script/TEXT_SET';
 
 export default function reducer(state = initialState, action = {}) {
   // console.log('SCRIPT REDUCER', action);
@@ -38,6 +42,11 @@ export default function reducer(state = initialState, action = {}) {
         scriptDecodeError: undefined,
         LabTechScript: action.result,
         scriptJSON: JSON.stringify(action.result, null, 2),
+      };
+    case TEXT_SET:
+      return {
+        ...state,
+        scriptText: action.result,
       };
     case CHANGE_TAB:
       return {
@@ -89,6 +98,7 @@ export function setXML({scriptXML}) {
       result: scriptXML,
     });
     dispatch(decodeScript({scriptXML}));
+    dispatch(setText({scriptXML}));
   };
 }
 
@@ -104,5 +114,15 @@ export function setJSON({scriptJSON}) {
       });
     const {LabTechScript} = getState().script;
     dispatch(encodeScript({LabTechScript}));
+  };
+}
+
+export function setText({scriptXML}) {
+  return (dispatch) => {
+    return decode.decodeXML(scriptXML)
+      .then((scriptJson) => decode.toText(scriptJson))
+      .then((scriptText) => {
+        return dispatch({type: TEXT_SET, result: scriptText});
+      });
   };
 }
