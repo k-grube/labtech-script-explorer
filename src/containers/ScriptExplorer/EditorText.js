@@ -49,7 +49,7 @@ EditorText.defaultProps = {
 
 /* eslint-disable react/no-unused-prop-types */
 EditorText.propTypes = {
-  scriptText: PropTypes.string.isRequired,
+  scriptText: PropTypes.array.isRequired,
   LabTechScript: PropTypes.object,
 };
 

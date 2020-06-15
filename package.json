@@ -1,6 +1,6 @@
 {
   "name": "labtech-script-explorer",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "React App that decodes and displays LabTech Scripts",
   "keywords": [
     "LabTech",

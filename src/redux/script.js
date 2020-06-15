@@ -9,7 +9,7 @@ const initialState = {
   LabTechScript: undefined,
   scriptXML: '',
   scriptJSON: '',
-  scriptText: '',
+  scriptText: [],
 };
 
 const LOAD_SCRIPTS = 'script/LOAD_SCRIPTS';

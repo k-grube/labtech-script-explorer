@@ -14,6 +14,11 @@ import LabTechScriptView from '../../components/LabTechScriptView/LabTechScriptV
 class EditorScript extends Component {
   render() {
     const {LabTechScript} = this.props;
+
+    if (!(LabTechScript && LabTechScript.PackedScript)) {
+      return <Container/>;
+    }
+
     let scripts = [];
     const primaryScript = LabTechScript.PackedScript;
 
