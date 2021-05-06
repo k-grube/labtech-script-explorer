@@ -62,7 +62,7 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "labtech-script-decode": "^0.7.2",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "object-assign": "4.1.1",
     "piping": "^1.0.0-rc.4",
