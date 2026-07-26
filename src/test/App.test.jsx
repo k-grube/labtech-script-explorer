@@ -23,9 +23,8 @@ describe('App', () => {
     await user.click(editor);
     await user.paste(xml);
     await user.click(screen.getByRole('tab', {name: 'Script View'}));
-    // b4 strengthens this to assert rendered script content
     await waitFor(() => {
-      expect(screen.getByRole('tab', {name: 'Script View'})).toHaveAttribute('aria-selected', 'true');
+      expect(screen.getByText('Export Test')).toBeInTheDocument();
     });
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
