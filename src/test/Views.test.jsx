@@ -8,12 +8,13 @@ import TextView from '../components/TextView.jsx';
 import JsonView from '../components/JsonView.jsx';
 
 const xml = readFileSync(join(import.meta.dirname, 'export-test.xml'), 'utf8');
+const bundleXml = readFileSync(join(import.meta.dirname, 'hell-script.xml'), 'utf8');
 
-function LoadFixture({children}) {
+function LoadFixture({children, source = xml}) {
   const {setScriptXML} = useScript();
   useEffect(() => {
-    setScriptXML(xml);
-  }, [setScriptXML]);
+    setScriptXML(source);
+  }, [setScriptXML, source]);
   return children;
 }
 
@@ -30,6 +31,23 @@ describe('TextView', () => {
       expect(screen.getByText(/ScriptId 6401/)).toBeInTheDocument();
     });
     expect(screen.getByText('Then')).toBeInTheDocument();
+  });
+
+  it('labels primary and bundled scripts, primary first', async () => {
+    render(
+      <ScriptProvider>
+        <LoadFixture source={bundleXml}>
+          <TextView/>
+        </LoadFixture>
+      </ScriptProvider>,
+    );
+    // hell fixture: primary 6570 bundles 5784, lib returns bundled-first
+    await waitFor(() => {
+      expect(screen.getByText(/Primary Script \(ScriptId 6570\)/)).toBeInTheDocument();
+    });
+    const bundled = screen.getByText(/Bundled Script \(ScriptId 5784\)/);
+    const primary = screen.getByText(/Primary Script \(ScriptId 6570\)/);
+    expect(primary.compareDocumentPosition(bundled) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 });
 

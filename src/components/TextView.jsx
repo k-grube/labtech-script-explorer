@@ -1,3 +1,5 @@
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import {useScript} from '../ScriptContext.jsx';
@@ -9,20 +11,30 @@ const sections = [
 ];
 
 export default function TextView() {
-  const {scriptText} = useScript();
+  const {script, scriptText} = useScript();
+
+  const primaryId = script?.PackedScript?.NewDataSet?.Table?.ScriptId;
+  // lib emits bundled scripts first, show primary first like the script view
+  const ordered = [...scriptText].sort((a, b) => {
+    return (b.ScriptId === primaryId) - (a.ScriptId === primaryId);
+  });
 
   return (
-    <Stack spacing={2}>
-      {scriptText.map((script, idx) => (
-        <div key={`${script.ScriptId}-${idx}`}>
-          <Typography variant="subtitle1">{`ScriptId ${script.ScriptId}`}</Typography>
-          {sections.map(([key, label]) => (
-            <div key={key}>
-              <Typography variant="subtitle2">{label}</Typography>
-              <pre style={{margin: 0, whiteSpace: 'pre-wrap'}}>{script[key]}</pre>
-            </div>
+    <Stack spacing={3}>
+      {ordered.map((entry, idx) => (
+        <Paper key={`${entry.ScriptId}-${idx}`} variant="outlined" sx={{p: 2}}>
+          <Typography variant="h6" gutterBottom>
+            {`${entry.ScriptId === primaryId ? 'Primary Script' : 'Bundled Script'} (ScriptId ${entry.ScriptId})`}
+          </Typography>
+          {sections.filter(([key]) => entry[key]).map(([key, label]) => (
+            <Box key={key} sx={{mb: 1.5}}>
+              <Typography variant="overline" color="text.secondary">{label}</Typography>
+              <Box component="pre" sx={{m: 0, overflowX: 'auto', fontSize: 13, lineHeight: 1.6}}>
+                {entry[key]}
+              </Box>
+            </Box>
           ))}
-        </div>
+        </Paper>
       ))}
     </Stack>
   );
