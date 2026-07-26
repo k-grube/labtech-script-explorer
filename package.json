@@ -1,6 +1,6 @@
 {
   "name": "labtech-script-explorer",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "React app that decodes and displays LabTech / ConnectWise Automate scripts",

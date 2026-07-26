@@ -4,7 +4,7 @@ Paste LTScript XML, inspect the decoded script, and view it as JSON, a step tree
 
 Built with Vite, React 19, and MUI. Uses [labtech-script-decode](https://github.com/mspgeek/labtech-script-decode) to parse and decode scripts.
 
-0.5.0 dropped the Express API server and Heroku deployment; the app is now a static SPA served from gh-pages.
+1.0.0 dropped the Express API server and Heroku deployment; the app is now a static SPA served from gh-pages.
 
 ## Live version
 
