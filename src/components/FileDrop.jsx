@@ -1,77 +1,79 @@
-import {useEffect, useState} from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Typography from '@mui/material/Typography';
-import {useScript} from '../ScriptContext.jsx';
+import { useEffect, useState } from 'react'
+import Backdrop from '@mui/material/Backdrop'
+import Typography from '@mui/material/Typography'
+import { useScript } from '../ScriptContext.jsx'
 
 function hasFiles(event) {
-  return [...(event.dataTransfer?.types ?? [])].includes('Files');
+  return [...(event.dataTransfer?.types ?? [])].includes('Files')
 }
 
 export default function FileDrop() {
-  const {setScriptXML} = useScript();
-  const [dragging, setDragging] = useState(false);
+  const { setScriptXML } = useScript()
+  const [dragging, setDragging] = useState(false)
 
   useEffect(() => {
     // depth counter, dragenter/dragleave fire per child element
-    let depth = 0;
+    let depth = 0
 
     function onDragEnter(event) {
       if (!hasFiles(event)) {
-        return;
+        return
       }
-      depth += 1;
-      setDragging(true);
+      depth += 1
+      setDragging(true)
     }
 
     function onDragLeave(event) {
       if (!hasFiles(event)) {
-        return;
+        return
       }
-      depth = Math.max(0, depth - 1);
+      depth = Math.max(0, depth - 1)
       if (depth === 0) {
-        setDragging(false);
+        setDragging(false)
       }
     }
 
     function onDragOver(event) {
       if (hasFiles(event)) {
-        event.preventDefault();
+        event.preventDefault()
       }
     }
 
     function onDrop(event) {
       if (!hasFiles(event)) {
-        return;
+        return
       }
-      event.preventDefault();
-      depth = 0;
-      setDragging(false);
-      const file = event.dataTransfer.files?.[0];
+      event.preventDefault()
+      depth = 0
+      setDragging(false)
+      const file = event.dataTransfer.files?.[0]
       if (!file) {
-        return;
+        return
       }
-      const reader = new FileReader();
+      const reader = new FileReader()
       reader.onload = () => {
-        setScriptXML(String(reader.result));
-      };
-      reader.readAsText(file);
+        setScriptXML(String(reader.result))
+      }
+      reader.readAsText(file)
     }
 
-    window.addEventListener('dragenter', onDragEnter);
-    window.addEventListener('dragleave', onDragLeave);
-    window.addEventListener('dragover', onDragOver);
-    window.addEventListener('drop', onDrop);
+    window.addEventListener('dragenter', onDragEnter)
+    window.addEventListener('dragleave', onDragLeave)
+    window.addEventListener('dragover', onDragOver)
+    window.addEventListener('drop', onDrop)
     return () => {
-      window.removeEventListener('dragenter', onDragEnter);
-      window.removeEventListener('dragleave', onDragLeave);
-      window.removeEventListener('dragover', onDragOver);
-      window.removeEventListener('drop', onDrop);
-    };
-  }, [setScriptXML]);
+      window.removeEventListener('dragenter', onDragEnter)
+      window.removeEventListener('dragleave', onDragLeave)
+      window.removeEventListener('dragover', onDragOver)
+      window.removeEventListener('drop', onDrop)
+    }
+  }, [setScriptXML])
 
   return (
-    <Backdrop open={dragging} sx={{zIndex: (theme) => theme.zIndex.modal + 1, pointerEvents: 'none'}}>
-      <Typography variant="h5" sx={{color: 'common.white'}}>Drop script XML</Typography>
+    <Backdrop open={dragging} sx={{ zIndex: (theme) => theme.zIndex.modal + 1, pointerEvents: 'none' }}>
+      <Typography variant="h5" sx={{ color: 'common.white' }}>
+        Drop script XML
+      </Typography>
     </Backdrop>
-  );
+  )
 }

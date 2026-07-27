@@ -1,20 +1,20 @@
-import {readFileSync} from 'node:fs';
-import {join} from 'node:path';
-import {render, screen, waitFor} from '@testing-library/react';
-import {describe, it, expect} from 'vitest';
-import {ScriptProvider, useScript} from '../ScriptContext.jsx';
-import ScriptView from '../components/ScriptView.jsx';
-import {useEffect} from 'react';
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { render, screen, waitFor } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
+import { ScriptProvider, useScript } from '../ScriptContext.jsx'
+import ScriptView from '../components/ScriptView.jsx'
+import { useEffect } from 'react'
 
 // new URL(x, import.meta.url) gets rewritten by vite's asset-URL handling under jsdom, breaks fs reads
-const xml = readFileSync(join(import.meta.dirname, 'export-test.xml'), 'utf8');
+const xml = readFileSync(join(import.meta.dirname, 'export-test.xml'), 'utf8')
 
-function LoadFixture({children}) {
-  const {setScriptXML} = useScript();
+function LoadFixture({ children }) {
+  const { setScriptXML } = useScript()
   useEffect(() => {
-    setScriptXML(xml);
-  }, [setScriptXML]);
-  return children;
+    setScriptXML(xml)
+  }, [setScriptXML])
+  return children
 }
 
 describe('ScriptView', () => {
@@ -22,14 +22,14 @@ describe('ScriptView', () => {
     render(
       <ScriptProvider>
         <LoadFixture>
-          <ScriptView/>
+          <ScriptView />
         </LoadFixture>
       </ScriptProvider>,
-    );
+    )
     await waitFor(() => {
-      expect(screen.getByText('Export Test')).toBeInTheDocument();
-    });
+      expect(screen.getByText('Export Test')).toBeInTheDocument()
+    })
     // fixture script has steps; every step row shows its description cell
-    expect(screen.getAllByTestId('script-step').length).toBeGreaterThan(0);
-  });
-});
+    expect(screen.getAllByTestId('script-step').length).toBeGreaterThan(0)
+  })
+})

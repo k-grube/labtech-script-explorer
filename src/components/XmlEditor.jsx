@@ -1,8 +1,8 @@
-import TextField from '@mui/material/TextField';
-import {useScript} from '../ScriptContext.jsx';
+import TextField from '@mui/material/TextField'
+import { useScript } from '../ScriptContext.jsx'
 
 export default function XmlEditor() {
-  const {scriptXML, setScriptXML} = useScript();
+  const { scriptXML, setScriptXML } = useScript()
 
   return (
     <TextField
@@ -15,5 +15,5 @@ export default function XmlEditor() {
       value={scriptXML}
       onChange={(event) => setScriptXML(event.target.value)}
     />
-  );
+  )
 }
