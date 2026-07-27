@@ -12,6 +12,7 @@ import XmlEditor from './components/XmlEditor.jsx';
 import JsonView from './components/JsonView.jsx';
 import ScriptView from './components/ScriptView.jsx';
 import TextView from './components/TextView.jsx';
+import FileDrop from './components/FileDrop.jsx';
 
 function Explorer() {
   const [tab, setTab] = useState(0);
@@ -47,6 +48,7 @@ export default function App() {
         </Toolbar>
       </AppBar>
       <Explorer/>
+      <FileDrop/>
     </ScriptProvider>
   );
 }

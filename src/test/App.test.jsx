@@ -1,6 +1,6 @@
 import {readFileSync} from 'node:fs';
 import {join} from 'node:path';
-import {render, screen, waitFor} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {describe, it, expect} from 'vitest';
 import App from '../App.jsx';
@@ -38,5 +38,24 @@ describe('App', () => {
     await waitFor(() => {
       expect(screen.getByRole('alert')).toHaveTextContent(/could not parse/i);
     });
+  });
+
+  it('shows a drop overlay while dragging a file over the window', () => {
+    render(<App/>);
+    fireEvent.dragEnter(window, {dataTransfer: {types: ['Files']}});
+    expect(screen.getByText('Drop script XML')).toBeInTheDocument();
+    fireEvent.dragLeave(window, {dataTransfer: {types: ['Files']}});
+  });
+
+  it('loads a dropped xml file', async () => {
+    const user = userEvent.setup();
+    render(<App/>);
+    const file = new File([xml], 'export-test.xml', {type: 'text/xml'});
+    fireEvent.drop(window, {dataTransfer: {types: ['Files'], files: [file]}});
+    await user.click(screen.getByRole('tab', {name: 'Script View'}));
+    await waitFor(() => {
+      expect(screen.getByText('Export Test')).toBeInTheDocument();
+    });
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 });
