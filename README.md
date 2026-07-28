@@ -15,8 +15,6 @@ npm ci
 npm run dev
 ```
 
-`labtech-script-decode` is consumed via `file:../labtech-script-decode` for local development. Once it's published to npm as `1.0.0`, the dependency gets pinned to `"labtech-script-decode": "1.0.0"` for reproducible installs.
-
 ## Test
 
 ```
