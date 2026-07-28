@@ -1,4 +1,6 @@
-import { useMemo } from 'react'
+import { useMemo, useRef, useState } from 'react'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView'
 import { useScript } from '../ScriptContext.jsx'
 
@@ -34,6 +36,8 @@ function buildItems(value, path, depth, expanded, parentIsArray) {
 
 export default function JsonView() {
   const { script } = useScript()
+  const [copied, setCopied] = useState(false)
+  const copiedTimer = useRef(null)
 
   const tree = useMemo(() => {
     if (!script) {
@@ -48,5 +52,22 @@ export default function JsonView() {
     return null
   }
 
-  return <RichTreeView items={tree.items} defaultExpandedItems={tree.expanded} />
+  function copyJson() {
+    navigator.clipboard.writeText(JSON.stringify(script, null, 2)).then(() => {
+      setCopied(true)
+      clearTimeout(copiedTimer.current)
+      copiedTimer.current = setTimeout(() => setCopied(false), 1500)
+    })
+  }
+
+  return (
+    <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+        <Button size="small" variant="outlined" onClick={copyJson}>
+          {copied ? 'Copied' : 'Copy JSON'}
+        </Button>
+      </Box>
+      <RichTreeView items={tree.items} defaultExpandedItems={tree.expanded} />
+    </Box>
+  )
 }
