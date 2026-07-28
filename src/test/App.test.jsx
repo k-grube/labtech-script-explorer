@@ -9,6 +9,16 @@ import App from '../App.jsx'
 const xml = readFileSync(join(import.meta.dirname, 'export-test.xml'), 'utf8')
 
 describe('App', () => {
+  it('toggles dark mode from the nav bar', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const toggle = await screen.findByRole('switch', { name: 'Dark mode' })
+    expect(toggle).not.toBeChecked()
+    await user.click(toggle)
+    expect(toggle).toBeChecked()
+    localStorage.clear()
+  })
+
   it('shows the four tabs', () => {
     render(<App />)
     for (const label of ['Script XML', 'Script JSON', 'Script View', 'Text View']) {
