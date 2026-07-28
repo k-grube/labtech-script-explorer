@@ -16,7 +16,20 @@ import FileDrop from './components/FileDrop.jsx'
 
 function Explorer() {
   const [tab, setTab] = useState(0)
-  const { error } = useScript()
+  const { script, error } = useScript()
+
+  // fresh load jumps to text view, losing the script falls back to the editor
+  // transition gate keeps per-keystroke re-decodes from yanking the tab mid-edit
+  const [prevScript, setPrevScript] = useState(null)
+  if (script !== prevScript) {
+    setPrevScript(script)
+    if (script && !prevScript) {
+      setTab(3)
+    }
+    if (!script) {
+      setTab(0)
+    }
+  }
 
   return (
     <Container sx={{ py: 2 }}>
@@ -27,9 +40,9 @@ function Explorer() {
       )}
       <Tabs value={tab} onChange={(event, next) => setTab(next)} sx={{ mb: 2 }}>
         <Tab label="Script XML" />
-        <Tab label="Script JSON" />
-        <Tab label="Script View" />
-        <Tab label="Text View" />
+        <Tab label="Script JSON" disabled={!script} />
+        <Tab label="Script View" disabled={!script} />
+        <Tab label="Text View" disabled={!script} />
       </Tabs>
       <Box hidden={tab !== 0}>
         <XmlEditor />

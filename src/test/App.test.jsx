@@ -16,12 +16,30 @@ describe('App', () => {
     }
   })
 
+  it('disables view tabs until a script loads, then jumps to text view', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    for (const label of ['Script JSON', 'Script View', 'Text View']) {
+      expect(screen.getByRole('tab', { name: label })).toBeDisabled()
+    }
+    const editor = screen.getByLabelText(/script xml/i)
+    await user.click(editor)
+    await user.paste(xml)
+    await waitFor(() => {
+      expect(screen.getByRole('tab', { name: 'Text View' })).toHaveAttribute('aria-selected', 'true')
+    })
+    expect(screen.getByText(/Primary Script \(ScriptId 6401\)/)).toBeInTheDocument()
+  })
+
   it('decodes pasted xml and renders the script view', async () => {
     const user = userEvent.setup()
     render(<App />)
     const editor = screen.getByLabelText(/script xml/i)
     await user.click(editor)
     await user.paste(xml)
+    await waitFor(() => {
+      expect(screen.getByRole('tab', { name: 'Script View' })).toBeEnabled()
+    })
     await user.click(screen.getByRole('tab', { name: 'Script View' }))
     await waitFor(() => {
       expect(screen.getByText('Export Test')).toBeInTheDocument()
@@ -52,6 +70,9 @@ describe('App', () => {
     render(<App />)
     const file = new File([xml], 'export-test.xml', { type: 'text/xml' })
     fireEvent.drop(window, { dataTransfer: { types: ['Files'], files: [file] } })
+    await waitFor(() => {
+      expect(screen.getByRole('tab', { name: 'Script View' })).toBeEnabled()
+    })
     await user.click(screen.getByRole('tab', { name: 'Script View' }))
     await waitFor(() => {
       expect(screen.getByText('Export Test')).toBeInTheDocument()
