@@ -9,6 +9,7 @@ import JsonView from '../components/JsonView.jsx'
 
 const xml = readFileSync(join(import.meta.dirname, 'export-test.xml'), 'utf8')
 const bundleXml = readFileSync(join(import.meta.dirname, 'hell-script.xml'), 'utf8')
+const demoXml = readFileSync(join(import.meta.dirname, 'Script Function Demonstration.xml'), 'utf8')
 
 function LoadFixture({ children, source = xml }) {
   const { setScriptXML } = useScript()
@@ -48,6 +49,22 @@ describe('TextView', () => {
     const bundled = screen.getByText(/Bundled Script \(ScriptId 5784\)/)
     const primary = screen.getByText(/Primary Script \(ScriptId 6570\)/)
     expect(primary.compareDocumentPosition(bundled) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('renders functions 257-259 with editor display text', async () => {
+    render(
+      <ScriptProvider>
+        <LoadFixture source={demoXml}>
+          <TextView />
+        </LoadFixture>
+      </ScriptProvider>,
+    )
+    await waitFor(() => {
+      expect(screen.getByText(/:NewScriptLabelFunction - Label/)).toBeInTheDocument()
+    })
+    const text = screen.getByText(/Script Resume State: Resume disabled/)
+    expect(text).toBeInTheDocument()
+    expect(screen.getByText(/Script Resume State: Resume from last successful script step/)).toBeInTheDocument()
   })
 })
 
