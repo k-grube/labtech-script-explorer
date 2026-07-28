@@ -6,8 +6,7 @@ export default function XmlEditor() {
 
   return (
     <TextField
-      label="Script XML"
-      placeholder="Paste script XML"
+      label="Drag or paste script XML"
       multiline
       minRows={10}
       maxRows={30}
