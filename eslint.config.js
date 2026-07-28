@@ -43,6 +43,7 @@ export default defineConfig(
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         process: 'readonly',
+        localStorage: 'readonly',
       },
     },
     rules: {
@@ -53,5 +54,14 @@ export default defineConfig(
       'react/display-name': 'warn',
     },
     settings: { react: { version: 'detect' } },
+  },
+  {
+    files: ['public/service-worker.js'],
+    languageOptions: {
+      globals: {
+        self: 'readonly',
+        caches: 'readonly',
+      },
+    },
   },
 )

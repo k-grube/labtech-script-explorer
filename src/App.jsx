@@ -1,5 +1,8 @@
 import { useState } from 'react'
+import { ThemeProvider, useColorScheme } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 import AppBar from '@mui/material/AppBar'
+import DarkModeSwitch from './components/DarkModeSwitch.jsx'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
@@ -13,6 +16,7 @@ import JsonView from './components/JsonView.jsx'
 import ScriptView from './components/ScriptView.jsx'
 import TextView from './components/TextView.jsx'
 import FileDrop from './components/FileDrop.jsx'
+import theme from './theme.js'
 
 function Explorer() {
   const [tab, setTab] = useState(0)
@@ -60,16 +64,38 @@ function Explorer() {
   )
 }
 
+function ThemeToggle() {
+  const { mode, systemMode, setMode } = useColorScheme()
+  if (!mode) {
+    return null
+  }
+  // untouched mode is 'system', the switch reflects the resolved scheme
+  const dark = (mode === 'system' ? systemMode : mode) === 'dark'
+  return (
+    <DarkModeSwitch
+      checked={dark}
+      onChange={(event) => setMode(event.target.checked ? 'dark' : 'light')}
+      slotProps={{ input: { 'aria-label': 'Dark mode' } }}
+    />
+  )
+}
+
 export default function App() {
   return (
-    <ScriptProvider>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">LabTech Script Explorer</Typography>
-        </Toolbar>
-      </AppBar>
-      <Explorer />
-      <FileDrop />
-    </ScriptProvider>
+    <ThemeProvider theme={theme} defaultMode="system">
+      <CssBaseline />
+      <ScriptProvider>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              LabTech Script Explorer
+            </Typography>
+            <ThemeToggle />
+          </Toolbar>
+        </AppBar>
+        <Explorer />
+        <FileDrop />
+      </ScriptProvider>
+    </ThemeProvider>
   )
 }
