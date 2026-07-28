@@ -1,7 +1,9 @@
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import { useScript } from '../ScriptContext.jsx'
+import ScriptNav from './ScriptNav.jsx'
 import ScriptSteps from './ScriptSteps.jsx'
 
 function PackedScriptView({ PackedScript, title }) {
@@ -35,15 +37,26 @@ export default function ScriptView() {
   // bundled scripts nest under the primary packed script
   const bundled = [].concat(primary.PackedScript || [])
 
+  const navItems = [primary, ...bundled].map((packed, idx) => ({
+    id: `view-script-${idx}`,
+    label: packed.NewDataSet.Table.ScriptName,
+    scriptId: packed.NewDataSet.Table.ScriptId,
+  }))
+
   return (
-    <Stack spacing={3}>
-      <PackedScriptView PackedScript={primary} title="Primary Script" />
-      {bundled.map((packed, idx) => (
-        <div key={idx}>
-          <Divider sx={{ mb: 2 }} />
-          <PackedScriptView PackedScript={packed} title={`Bundled Script #${idx + 1}`} />
+    <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start' }}>
+      <ScriptNav items={navItems} />
+      <Stack spacing={3} sx={{ flex: 1, minWidth: 0 }}>
+        <div id="view-script-0" style={{ scrollMarginTop: 80 }}>
+          <PackedScriptView PackedScript={primary} title="Primary Script" />
         </div>
-      ))}
-    </Stack>
+        {bundled.map((packed, idx) => (
+          <div key={idx} id={`view-script-${idx + 1}`} style={{ scrollMarginTop: 80 }}>
+            <Divider sx={{ mb: 2 }} />
+            <PackedScriptView PackedScript={packed} title={`Bundled Script #${idx + 1}`} />
+          </div>
+        ))}
+      </Stack>
+    </Box>
   )
 }
