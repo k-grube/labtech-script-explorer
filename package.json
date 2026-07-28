@@ -28,7 +28,7 @@
     "@emotion/styled": "11.14.1",
     "@mui/material": "7.3.11",
     "@mui/x-tree-view": "9.10.0",
-    "labtech-script-decode": "file:../labtech-script-decode",
+    "labtech-script-decode": "1.0.1",
     "react": "19.2.7",
     "react-dom": "19.2.7"
   },
