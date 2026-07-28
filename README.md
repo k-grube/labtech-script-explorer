@@ -1,20 +1,38 @@
 # LabTech Script Explorer
 
-Copy LTScript XML files, and inspect before importing into your server!  
-Utilizes [labtech-script-decode](https://github.com/mspgeek/labtech-script-decode) library to handle parsing and decoding scripts. 
+Paste LTScript XML, inspect the decoded script, and view it as JSON, a step tree, or plain text before importing into your server.
 
-# [Live Version Here](https://k-grube.github.io/labtech-script-explorer/)
+Built with Vite, React 19, and MUI. Uses [labtech-script-decode](https://github.com/mspgeek/labtech-script-decode) to parse and decode scripts. Static SPA, decoding runs entirely in the browser.
 
-### Test and Build
+## Live version
+
+https://k-grube.github.io/labtech-script-explorer
+
+## Development
 
 ```
-
 npm ci
+npm run dev
+```
 
-# dev version
-npm run start
-
-# build static version
-npm run build
+## Test
 
 ```
+npm test
+```
+
+## Build
+
+```
+npm run build
+```
+
+Outputs a static production build to `dist/`.
+
+## Deploy
+
+```
+npm run deploy
+```
+
+Publishes `dist/` to the `gh-pages` branch, live at https://k-grube.github.io/labtech-script-explorer.
