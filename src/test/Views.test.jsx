@@ -64,7 +64,7 @@ describe('TextView', () => {
     })
     const text = screen.getByText(/Script Resume State: Resume disabled/)
     expect(text).toBeInTheDocument()
-    expect(screen.getByText(/Script Resume State: Resume from last successful script step/)).toBeInTheDocument()
+    expect(screen.getByText(/Script Resume State: Resume from last executed script step/)).toBeInTheDocument()
   })
 })
 
